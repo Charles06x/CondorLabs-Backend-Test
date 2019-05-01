@@ -16,7 +16,7 @@ var controller = {
         });
     },
 
-    //Returns one project, given a name. (Search products and details).
+    //Returns one product, given a name. (Search products and details).
     getProduct: function(req, res){
         const productName = req.params.productName;
 
@@ -45,8 +45,6 @@ var controller = {
             return res.status(200).send({product: product});
         })
     },
-
-    
 
     //Post methods.
     //Saves a new product to the database.
