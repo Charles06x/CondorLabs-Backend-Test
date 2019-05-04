@@ -59,16 +59,21 @@ var controller = {
         product.productSeller = params.productSeller;
         product.productDescription = params.productDescription;
         product.productCategory = params.productCategory;
-        product.productImg = null
+        product.productQuantity = (params.productQuantity != null) ? params.productQuantity: 0;
+        product.productImg = (params.productImg != null) ? params.productImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Simple_cardboard_box.svg/1280px-Simple_cardboard_box.svg.png";
         
+        if(product.productName != null & product.productPrice != null & product.productSeller != null & product.productCategory != null){
+            product.save((err, productStoraged) => {
+                if(err) return res.status(500).send({message: "An error has occurred while saving document.", error: err});
 
-        product.save((err, productStoraged) => {
-            if(err) return res.status(500).send({message: "An error has occurred while saving document.", error: err});
+                if(!productStoraged) return res.status(404).send({message: "product not saved."})
 
-            if(!productStoraged) return res.status(404).send({message: "product not saved."})
+                return res.status(200).send({product: productStoraged})
+            });
+        }else{
 
-            return res.status(200).send({product: productStoraged})
-        });
+        }
+       
 
     }
 }

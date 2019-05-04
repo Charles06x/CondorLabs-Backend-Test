@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express');
-const ProductController = require('../controllers/products');
+const CategoryController = require('../controllers/category');
 
 //Import the twt requirements.
 const jwt = require('express-jwt');
@@ -34,12 +34,11 @@ const savePermission = jwtAuthz(['create:products']);
 
 
 //Get endpoints
-router.get('/products', ProductController.getAllProducts);
-router.get('/categories/:productCategory', ProductController.getProductsByCategory);
-router.get('/products/:productName', ProductController.getProduct);
+router.get('/categories', CategoryController.getAllCategories);
+router.get('/category/:id', CategoryController.getOneCategory);
 
 //Post endpoints
 //router.post('/products', checkJwt, savePermission, ProductController.saveProduct);  //This endpoint is secure for access token with create:products permissions (scope)
-router.post('/products', ProductController.saveProduct);  //This endpoint is secure for access token with create:products permissions (scope)
+router.post('/category', CategoryController.saveCategory);  //This endpoint is secure for access token with create:products permissions (scope)
 
 module.exports = router
