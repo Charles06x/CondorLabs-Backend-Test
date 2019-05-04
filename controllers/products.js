@@ -22,7 +22,7 @@ var controller = {
     getProduct: function(req, res){
         const productName = req.params.productName;
 
-        //if(productName == null) return res.status(404).send({message: "No name provided."});
+        if(productName == null) return res.status(404).send({message: "No name provided."});
 
         Product.find({productName: productName}).sort('productName').exec((err, product) => {
             if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
@@ -38,6 +38,8 @@ var controller = {
     getProductsByCategory: function(req, res){
         
         const productCategory = req.params.productCategory;
+        if(productCategory == null) return res.status(404).send({message: "No category provided."});
+
         Product.find({productCategory: productCategory}).sort('productName').exec((err, product) => {
             if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
 
