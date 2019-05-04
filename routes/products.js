@@ -35,8 +35,9 @@ const savePermission = jwtAuthz(['create:products']);
 
 //Get endpoints
 router.get('/products', ProductController.getAllProducts);
-router.get('/categories/:productCategory', ProductController.getProductsByCategory);
+router.get('/:productCategory/products', ProductController.getProductsByCategory);
 router.get('/products/:productName', ProductController.getProduct);
+router.get('/categories', ProductController.getCategories);
 
 //Post endpoints
 //router.post('/products', checkJwt, savePermission, ProductController.saveProduct);  //This endpoint is secure for access token with create:products permissions (scope)

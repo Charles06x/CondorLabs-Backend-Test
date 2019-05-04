@@ -14,6 +14,8 @@ var controller = {
 
             return res.status(200).send({products});
         });
+        
+    
     },
 
     //Returns one product, given a name. (Search products and details).
@@ -34,9 +36,8 @@ var controller = {
 
     //Returns the products given a category (Display products by category).
     getProductsByCategory: function(req, res){
+        
         const productCategory = req.params.productCategory;
-        if(productCategory == null) return res.status(404).send({message: "No category provided."});
-
         Product.find({productCategory: productCategory}).sort('productName').exec((err, product) => {
             if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
 
@@ -44,11 +45,30 @@ var controller = {
 
             return res.status(200).send({product: product});
         })
+
+    },
+
+    getCategories: function(req, res){
+        var l = []
+        Product.find().exec((err, products) => {
+            if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
+
+            if(!products) return res.status(404).send({message: "No Categories were found."});
+
+            products.map(product => {
+                if(!l.includes(product.productCategory)){
+                    l.push(product.productCategory)
+                }
+                
+            })
+
+            return res.status(200).send({categories: l});
+        })
     },
 
     //Post methods.
     //Saves a new product to the database.
-    saveProduct: function(req, res){
+    saveProduct: function(req, res) {
         var product = new Product();
         
 

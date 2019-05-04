@@ -3,12 +3,11 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
-const Category = require('./category');
 
 const ProductSchema = schema({
     productName: String,
     productDescription: String,
-    productCategory: [{type: schema.Types.ObjectId, ref: 'Category'}],
+    productCategory: String,
     productPrice: Number,
     productSeller: String,
     productQuantity: Number,
