@@ -43,4 +43,10 @@ router.get('/categories', ProductController.getCategories);
 //router.post('/products', checkJwt, savePermission, ProductController.saveProduct);  //This endpoint is secure for access token with create:products permissions (scope)
 router.post('/products', ProductController.saveProduct);  //This endpoint is secure for access token with create:products permissions (scope)
 
+//Put endpoints
+router.put('/products/:id', ProductController.updateProduct);
+
+//Delete endpoints
+router.delete('/products/:id', ProductController.deleteProduct);
+
 module.exports = router

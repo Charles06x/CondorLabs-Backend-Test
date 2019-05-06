@@ -92,10 +92,54 @@ var controller = {
                 return res.status(200).send({product: productStoraged})
             });
         }else{
-
+            return res.status(406).send({message: "Bad Request"});
         }
        
 
+    },
+
+    updateProduct: function(req, res) {       
+        var id = req.params.id;
+
+        var params = req.body
+
+        var productToBeUpdated = {
+            "_id": id,
+            "productName": params.productName,
+            "productPrice": params.productPrice,
+            "productSeller": params.productSeller,
+            "productDescription": params.productDescription,
+            "productCategory": params.productCategory,
+            "productQuantity": (params.productQuantity != null) ? params.productQuantity: 0,
+            "productImg": (params.productImg != null) ? params.productImg: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Simple_cardboard_box.svg/1280px-Simple_cardboard_box.svg.png"
+        }
+        
+        if(productToBeUpdated.productName != null & productToBeUpdated.productPrice != null & productToBeUpdated.productSeller != null & productToBeUpdated.productCategory != null){
+            Product.findByIdAndUpdate(id, productToBeUpdated, {new: true}, (err, product) => {
+                if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
+
+                if(!product) return res.status(404).send({message: "No product was found."});
+
+                return res.status(200).send({product: product});
+            })
+        }else{
+            return res.status(406).send({message: "Bad Request"});
+        }     
+
+    },
+
+    deleteProduct: function(req, res) {
+        var id = req.params.id;
+
+        if(id){
+            Product.findByIdAndDelete(id, (err, productDeleted) => {
+                if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
+
+                if(!productDeleted) return res.status(404).send({message: "No product was found."});
+
+                return res.status(200).send({product: productDeleted});
+            })
+        }
     }
 }
 
