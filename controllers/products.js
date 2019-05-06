@@ -18,20 +18,19 @@ var controller = {
     
     },
 
-    //Returns one product, given a name. (Search products and details).
+    //Gets one product given an ID
     getProduct: function(req, res){
-        const productName = req.params.productName;
+        const id = req.params.id;
 
-        if(productName == null) return res.status(404).send({message: "No name provided."});
+        if(id === null || id === "") return res.status(404).send({message: "No id provided."});
 
-        Product.find({productName: productName}).sort('productName').exec((err, product) => {
+        Product.findById(id, (err, product) => {
             if (err) return res.status(500).send({message: "An error has ocurred.", error: err});
 
             if(!product) return res.status(404).send({message: "No product was found."});
 
             return res.status(200).send({product: product});
         })
-
     },
 
     //Returns the products given a category (Display products by category).

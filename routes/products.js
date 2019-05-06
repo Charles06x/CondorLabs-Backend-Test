@@ -36,7 +36,7 @@ const savePermission = jwtAuthz(['create:products']);
 //Get endpoints
 router.get('/products', ProductController.getAllProducts);
 router.get('/:productCategory/products', ProductController.getProductsByCategory);
-router.get('/products/:productName', ProductController.getProduct);
+router.get('/products/:id', ProductController.getProduct);
 router.get('/categories', ProductController.getCategories);
 
 //Post endpoints
